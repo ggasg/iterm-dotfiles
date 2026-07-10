@@ -1,0 +1,19 @@
+# =============================================================================
+#  ~/.zshrc.local  —  machine-specific overrides (NOT tracked by git)
+#
+#  Copy this to ~/.zshrc.local on each machine and edit as needed:
+#      cp zsh/.zshrc.local.example ~/.zshrc.local
+#
+#  Use it for anything that differs per computer or shouldn't be committed:
+#  per-machine PATH entries, work vs. personal aliases, API tokens, etc.
+# =============================================================================
+
+# Example: a Homebrew path that differs between Intel and Apple Silicon
+# eval "$(/opt/homebrew/bin/brew shellenv)"   # Apple Silicon
+# eval "$(/usr/local/bin/brew shellenv)"      # Intel
+
+# Example: secrets (keep these out of the tracked repo)
+# export SOME_API_TOKEN="..."
+
+# Example: work-only aliases
+# alias vpn='...'

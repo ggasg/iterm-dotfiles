@@ -1,0 +1,12 @@
+# Machine-local / secret files — never commit
+.zshrc.local
+*.local
+
+# Backups created by link.sh
+*.backup-*
+
+# macOS cruft
+.DS_Store
+
+# iTerm2 writes a lock/aux file alongside its plist in the custom folder
+iterm2/*.lock
