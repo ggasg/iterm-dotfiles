@@ -6,7 +6,8 @@
 #  Usage:
 #    ./restore.sh              — interactive; prompts before acting
 #    ./restore.sh --yes        — skip confirmation prompt
-#    ./restore.sh --factory    — also reset iTerm2 and tmux to factory defaults
+#    ./restore.sh --factory    — also reset iTerm2/GNOME Terminal and tmux to
+#                                 factory defaults
 #    ./restore.sh --factory --yes
 #
 #  What it does:
@@ -18,6 +19,7 @@
 #    2. With --factory, additionally:
 #         macOS: disconnects iTerm2 from the custom prefs folder and deletes
 #                all iTerm2 preferences (full factory reset).
+#         Linux: resets GNOME Terminal profiles via `dconf reset`.
 #         tmux:  kills the running tmux server so built-in defaults take effect.
 #
 #  Nothing is lost:
@@ -90,7 +92,7 @@ echo "==> iterm-dotfiles restore"
 echo ""
 echo "  Managed files: ~/.zshrc  ~/.p10k.zsh  ~/.tmux.conf"
 if $FACTORY; then
-  echo "  --factory: will also reset iTerm2 (macOS) and tmux to factory defaults"
+  echo "  --factory: will also reset iTerm2 (macOS) / GNOME Terminal (Linux) and tmux to factory defaults"
 fi
 echo ""
 confirm "Proceed?" || { echo "Aborted."; exit 0; }
@@ -128,7 +130,33 @@ else
   echo "  Tip: use --factory to also kill the running tmux server immediately"
 fi
 
-# ── 3. iTerm2 (macOS only) ───────────────────────────────────────────────────
+# ── 3. GNOME Terminal (Linux only) ──────────────────────────────────────────
+
+if [[ "$(uname)" == "Linux" ]] && command -v dconf >/dev/null 2>&1; then
+  echo ""
+  echo "--- GNOME Terminal ---"
+  if $FACTORY; then
+    if confirm "  Reset GNOME Terminal profiles to factory defaults (dconf reset)?"; then
+      dconf reset -f /org/gnome/terminal/ 2>/dev/null || true
+      echo "  Done. Open a new GNOME Terminal window to see factory defaults."
+      echo ""
+      echo "  To restore your saved profile later:"
+      echo "    ./scripts/gnome-terminal-load.sh"
+    else
+      echo "  Skipped."
+    fi
+  else
+    echo "  Skipped (GNOME Terminal profiles are unchanged)."
+    echo ""
+    echo "  To reset GNOME Terminal to factory defaults, run:"
+    echo "    ./restore.sh --factory"
+    echo ""
+    echo "  Or manually:  dconf reset -f /org/gnome/terminal/"
+    echo "  Then reload your saved profile:  ./scripts/gnome-terminal-load.sh"
+  fi
+fi
+
+# ── 4. iTerm2 (macOS only) ───────────────────────────────────────────────────
 
 if [[ "$(uname)" == "Darwin" ]]; then
   echo ""

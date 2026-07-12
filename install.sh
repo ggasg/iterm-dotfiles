@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-#  install.sh — set up this iTerm2 + zsh environment on a fresh Mac.
+#  install.sh — set up this environment on a fresh machine.
+#  macOS: iTerm2 + zsh via Homebrew. Linux: delegates to install-linux.sh.
 #  Idempotent: safe to run more than once.
 # =============================================================================
 set -euo pipefail
@@ -10,11 +11,14 @@ cd "$REPO"
 
 echo "==> iterm-dotfiles install starting"
 
-# --- 0. Sanity: macOS + Homebrew ---
+# --- 0. Platform dispatch ---
+# Everything below this block is macOS-specific (Homebrew, iTerm2). Linux
+# gets its own script (apt instead of brew, no iTerm2 step).
 if [[ "$(uname)" != "Darwin" ]]; then
-  echo "This is intended for macOS." >&2
-  exit 1
+  echo "==> Non-macOS platform detected, delegating to scripts/install-linux.sh"
+  exec bash "$REPO/scripts/install-linux.sh"
 fi
+
 if ! command -v brew >/dev/null 2>&1; then
   echo "Homebrew not found. Install it first: https://brew.sh" >&2
   exit 1

@@ -11,8 +11,12 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Running link.sh adopts .p10k.zsh the first time (after `p10k configure`).
 bash "$REPO/scripts/link.sh"
 
-# iTerm2 prefs need an explicit export unless you use the custom-folder method.
-bash "$REPO/scripts/iterm-prefs.sh"
+if [[ "$(uname)" == "Darwin" ]]; then
+  # iTerm2 prefs need an explicit export unless you use the custom-folder method.
+  bash "$REPO/scripts/iterm-prefs.sh"
+elif command -v dconf >/dev/null 2>&1; then
+  bash "$REPO/scripts/gnome-terminal-save.sh"
+fi
 
 echo
 echo "==> Now review and commit:"
