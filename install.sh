@@ -53,9 +53,14 @@ Finish up:
      (or point iTerm2's custom-prefs folder at ./iterm2 — see README).
   3. Open a new iTerm2 tab and run:  p10k configure
   4. Then run:  ./scripts/link.sh    (adopts the new ~/.p10k.zsh into the repo)
-  5. Commit:  git add -A && git commit -m "Update config"
+  5. Start tmux to verify the prompt works inside it:  tmux new
+  6. Commit:  git add -A && git commit -m "Update config"
 
 Verify: run  echo \$TERM_PROGRAM  in each app.
-  iTerm2      -> p10k prompt with git/python/scala context
-  Terminal.app -> your plain profile, no oh-my-zsh
+  iTerm2       -> p10k prompt with git/python/scala context
+  tmux (in iTerm2) -> same p10k prompt (oh-my-zsh loads because TERM_PROGRAM != Apple_Terminal)
+  Terminal.app -> plain profile, no oh-my-zsh
+
+To undo this install and restore your previous config:
+  ./restore.sh
 EOF

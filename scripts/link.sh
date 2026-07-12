@@ -41,7 +41,8 @@ link_file() {
   echo "==> Linked $home_target -> $repo_path"
 }
 
-link_file "zsh/.zshrc"   "$HOME/.zshrc"
+link_file "zsh/.zshrc"     "$HOME/.zshrc"
 link_file "p10k/.p10k.zsh" "$HOME/.p10k.zsh"
+link_file "tmux/.tmux.conf" "$HOME/.tmux.conf"
 
 echo "==> Linking complete"

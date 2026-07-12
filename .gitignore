@@ -2,6 +2,11 @@
 .zshrc.local
 *.local
 
+# Claude Code — settings, permissions, and project-instruction files
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+
 # Backups created by link.sh
 *.backup-*
 

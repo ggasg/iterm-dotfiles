@@ -12,8 +12,10 @@
 #      is git-ignored. See zsh/.zshrc.local.example.
 # =============================================================================
 
-# ── powerlevel10k instant prompt — iTerm2 only, must stay near the top ───────
-if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+# ── powerlevel10k instant prompt — all terminals except Terminal.app ─────────
+# Gating on != Apple_Terminal (not == iTerm.app) means the full stack also
+# loads inside tmux panes and Linux terminals without any extra config.
+if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then
   if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
   fi
@@ -53,9 +55,9 @@ command -v pyenv >/dev/null 2>&1 && eval "$(pyenv init -)"
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
 # =============================================================================
-#  OH-MY-ZSH  —  iTerm2 ONLY
+#  OH-MY-ZSH  —  all terminals except macOS Terminal.app
 # =============================================================================
-if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then
   export ZSH="$HOME/.oh-my-zsh"
   ZSH_THEME="powerlevel10k/powerlevel10k"
 

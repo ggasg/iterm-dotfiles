@@ -9,6 +9,7 @@ tap "coursier/formulas"
 brew "git"
 brew "pyenv"        # Python version management
 brew "coursier"     # Scala/JVM installer; run `cs setup` afterwards
+brew "tmux"         # terminal multiplexer
 
 # --- Nerd Font required by powerlevel10k glyphs ---
 cask "font-meslo-lg-nerd-font"
