@@ -51,6 +51,16 @@ command -v pyenv >/dev/null 2>&1 && eval "$(pyenv init -)"
 # `cs setup` writes PATH entries to ~/.zprofile, so scala/sbt/scalafmt are
 # already on PATH in every login shell. Nothing extra needed here.
 
+# --- Java (Azul Zulu 21) — both terminals, macOS only ---
+# Pins JAVA_HOME to the Zulu 21 JDK registered with java_home, so every JVM
+# tool resolves it even if a Homebrew formula (maven, gradle, sbt, ...) pulls
+# in its own openjdk as a side dependency. Install with:
+#   brew install --cask zulu@21
+if [[ "$OSTYPE" == darwin* ]] && /usr/libexec/java_home -v 21 >/dev/null 2>&1; then
+  export JAVA_HOME="$(/usr/libexec/java_home -v 21)"
+  export PATH="$JAVA_HOME/bin:$PATH"
+fi
+
 # --- Machine-local overrides (git-ignored) ---
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 

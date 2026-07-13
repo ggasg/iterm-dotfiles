@@ -13,3 +13,7 @@ brew "tmux"         # terminal multiplexer
 
 # --- Nerd Font required by powerlevel10k glyphs ---
 cask "font-meslo-lg-nerd-font"
+
+# --- JDK — dedicated Azul Zulu cask, NOT the "openjdk" formula ---
+# zsh/.zshrc pins JAVA_HOME to whatever java_home resolves for v21.
+cask "zulu@21"
